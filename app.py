@@ -162,6 +162,3 @@ def filter_schools():
     
     return render_template('school_list.html', data=filtered_schools, current_page=page_num, 
                             total_pages=total_pages, total_items=total_items, per_page=page_size)
-
-if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=5000)
