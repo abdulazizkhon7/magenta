@@ -1,0 +1,35 @@
+{% for school in data %}
+<div class="school-card">
+    <div class="school-image">
+        <img src="{{ school.image }}" alt="{{ school.name }}" />
+    </div>
+    <div class="school-content">
+        <h3>{{ school.name }}</h3>
+        <div class="rating">
+            <span>⭐</span>
+            <span>{{ school.rating }}</span>
+        </div>
+        <div class="school-details">
+            <div class="detail-item">
+                <span>📍</span>
+                <span >{{ school.location }}</span>
+            </div>
+            <div class="detail-item">
+                <span>💴</span>
+                <span>{{ school.tuition }}</span>
+            </div>
+            <div class="detail-item">
+                <span>📅</span>
+                <span>{{ school.duration }}</span>
+            </div>
+            <div class="detail-item">
+                <span>📚 {{ school.course_types }}</span>
+            </div>
+        </div>
+        <p class="school-description"><span>〒</span>{{school.features}}</p>
+        <button class="button" onclick="window.open('{{ school.website }}', '_blank')" data-lang="アクセス">
+            アクセス
+        </button>
+    </div>
+</div>
+{% endfor %}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MAGENTA日本語学校検索</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+        <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    </head>
+    <style>
+        .header select,
+        .header input[type="checkbox"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating {
+            color: #9b59b6;
+            font-size: 20px;
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: var(--primary-light);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout-container">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo" data-lang="logo">日本語学校検索</div>
+            </div>
+            <div class="header-center">
+                <div class="search-input header-search">
+                    <input type="text" id="searchBox" value="{{ search_query }}" placeholder="学校を検索"
+                        data-lang="search-placeholder" />
+                </div>
+                <button id="searchButton" class="searchButton" data-lang="search-button">
+                    🔍
+                </button>
+            </div>
+            <div class="header-right">
+                <div class="mode-switch">
+                    <label class="switch-label">
+                        <input type="checkbox" id="darkMode" />
+                        <span class="switch-slider">
+                            <span class="switch-icon">☀️</span>
+                            <span class="switch-icon">🌙</span>
+                        </span>
+                    </label>
+                </div>
+                <select class="language-select">
+                    <option value="ja" data-lang="lang-ja">日本語</option>
+                    <option value="en" data-lang="lang-en">English</option>
+                    <option value="uzb" data-lang="lang-uzb">O`zbekcha</option>
+                    <option value="mn" data-lang="lang-mn">Mongolia</option>
+                    <option value="cn" data-lang="lang-cn">Chinese</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel" id="carousel">
+                    <div class="carousel-slide">
+                        <img src="https://as1.ftcdn.net/v2/jpg/01/20/06/26/1000_F_120062614_GBQvoPkyWGf7d83qSUmnLBFedaOhOR5U.jpg"
+                            alt="写真" />
+                        <div class="carousel-caption">
+                            <h3></h3>
+                            <p data-lang="img1">日本語を一緒に学びましょう！</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://as1.ftcdn.net/v2/jpg/02/65/23/70/1000_F_265237090_Muthvb72m2POYFjyx7F5UCQLh9JdBtKN.jpg"
+                            alt="写真2" />
+                        <div class="carousel-caption">
+                            <h3></h3>
+                            <p data-lang="img2">日本語を楽しく学ぼう！</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://as1.ftcdn.net/v2/jpg/04/98/23/10/1000_F_498231018_6w6Zt0h2PdU4Muy5Tvph2VeNG67yTuwl.jpg"
+                            alt="写真3" />
+                        <div class="carousel-caption">
+                            <h3></h3>
+                            <p data-lang="img3">みんなで日本語を勉強しましょう！</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://as1.ftcdn.net/v2/jpg/12/26/14/78/1000_F_1226147875_3RteUT7fK9WCsl27ey0tq4nvt5qBXZF3.jpg"
+                            alt="写真4" />
+                        <div class="carousel-caption">
+                            <h3></h3>
+                            <p data-lang="img4">日本語を学んで、新しい世界を広げよう！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-button prev" id="prevSlide">❮</button>
+            <button class="carousel-button next" id="nextSlide">❯</button>
+
+            <div class="carousel-dots" id="carouselDots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+        <div class="main-container">
+            <form id="filterForm" action="/filter" method="GET" class="filter-form">
+                <aside class="filter-panel">
+                    <div class="filter-card">
+                        <h3 class="section-title" data-lang="Search Criteria">
+                            検索条件
+                        </h3>
+                        <div class="form-group">
+                            <label data-lang="region-label">地域</label>
+                            <select id="region" name="region">
+                                <option value="" data-lang="region-text">全ての地域</option>
+                                <option value="東京都" data-lang="東京都">東京都</option>
+                                <option value="大阪府" data-lang="大阪府">大阪府</option>
+                                <option value="福岡県" data-lang="福岡県">福岡県</option>
+                                <option value="京都府" data-lang="京都府">京都府</option>
+                                <option value="北海道" data-lang="北海道">北海道</option>
+                                <option value="愛知県" data-lang="愛知県">愛知県</option>
+                                <option value="茨城県" data-lang="茨城県">茨城県</option>
+                                <option value="埼玉県" data-lang="埼玉県">埼玉県</option>
+                                <option value="千葉県" data-lang="千葉県">千葉県</option>
+                                <option value="兵庫県" data-lang="兵庫県">兵庫県</option>
+                                <option value="新潟県" data-lang="新潟県">新潟県</option>
+                                <option value="福島県" data-lang="福島県">福島県</option>
+                                <option value="栃木県" data-lang="栃木県">栃木県</option>
+                                <option value="群馬県" data-lang="群馬県">群馬県</option>
+                                <option value="神奈川県" data-lang="神奈川県">
+                                    神奈川県
+                                </option>
+                                <option value="長野県" data-lang="長野県">長野県</option>
+                                <option value="富山県" data-lang="富山県">富山県</option>
+                                <option value="石川県" data-lang="石川県">石川県</option>
+                                <option value="岐阜県" data-lang="岐阜県">岐阜県</option>
+                                <option value="静岡県" data-lang="静岡県">静岡県</option>
+                                <option value="奈良県" data-lang="奈良県">奈良県</option>
+                                <option value="和歌山県" data-lang="和歌山県">
+                                    和歌山県
+                                </option>
+                                <option value="鳥取県" data-lang="鳥取県">鳥取県</option>
+                                <option value="島根県" data-lang="島根県">島根県</option>
+                                <option value="岡山県" data-lang="岡山県">岡山県</option>
+                                <option value="広島県" data-lang="広島県">広島県</option>
+                                <option value="山口県" data-lang="山口県">山口県</option>
+                                <option value="愛媛県" data-lang="愛媛県">愛媛県</option>
+                                <option value="熊本県" data-lang="熊本県">熊本県</option>
+                                <option value="沖縄県" data-lang="沖縄県">沖縄県</option>
+                                <option value="宮城県" data-lang="宮城県">宮城県</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-lang="price-label">学費 </label>
+                            <span id="priceDisplay">¥2,000,000</span>
+                            <p data-lang="price-fees">以内</p>
+                            <input type="range" id="priceRange" name="price" min="900000" max="2000000" step="100000"
+                                value="2000000" oninput="updatePriceDisplay(this.value)" />
+                        </div>
+
+                        <div class="form-group">
+                            <label data-lang="course-type-label">コースタイプ</label>
+                            <div>
+                                <label><input type="checkbox" name="course_type" value="長期" />
+                                    <span data-lang="long-term">長期</span></label>
+                                <label><input type="checkbox" name="course_type" value="短期" /><span
+                                        data-lang="short-term"> 短期 </span></label>
+                                <label><input type="checkbox" name="course_type" value="寮完備" />
+                                    <span data-lang="dormitory">寮完備 </span></label>
+                                <label><input type="checkbox" name="course_type" value="奨学金制度" /><span
+                                        data-lang="scholarship"> 奨学金制度</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </form>
+            <main class="content-area">
+                <div class="school-list" id="schoolList"></div>
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="current-page">PAGE 1</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button id="prev-page" class="pagination-button" onclick="changePage('prev')" data-lang="prev">
+                            前の
+                        </button>
+                        <div class="page-numbers" id="page-numbers"></div>
+                        <button id="next-page" class="pagination-button" onclick="changePage('next')" data-lang="next">
+                            次へ
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 MAGENTA日本語学校検索</p>
+            <br />
+            <p>Powered by <a href="#" target="_blank">MAGENTA</a></p>
+        </div>
+    </footer>
+</body>
+
+</html>
