@@ -2,14 +2,13 @@ from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
-app.secret_key = 'many_random_bytes'
+app.secret_key = 'many random bytes'
 
-# MySQL configurations
-app.config['MYSQL_HOST'] = 'trolley.proxy.rlwy.net'
-app.config['MYSQL_PORT'] = 22258
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'wCNTYFzYMHaAGILJLJwmPqWRxPQWJnJg'  # parolni "show" qilib olasan
-app.config['MYSQL_DB'] = 'railway'
+app.config['MYSQL_HOST'] = 'localhost'  # o'zingizning mysql serveringiz
+app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_USER'] = 'root'           # o'zingiz tanlagan username
+app.config['MYSQL_PASSWORD'] = 'abu2004'  # parolingizni yozing
+app.config['MYSQL_DB'] = 'magenta'              # yaratgan database nomi
 
 mysql = MySQL(app)
 
@@ -161,4 +160,7 @@ def filter_schools():
     ]
     
     return render_template('school_list.html', data=filtered_schools, current_page=page_num, 
-                            total_pages=total_pages, total_items=total_items, per_page=page_size)
+                            total_pages=total_pages, total_items=total_items, per_page=page_size)   
+
+if __name__ == '__main__':
+    app.run(debug=False, host="0.0.0.0", port=5000)
