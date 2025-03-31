@@ -4,11 +4,11 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
-app.config['MYSQL_HOST'] = 'localhost'  # o'zingizning mysql serveringiz
+app.config['MYSQL_HOST'] = 'mysql.railway.internal'  # o'zingizning mysql serveringiz
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'root'           # o'zingiz tanlagan username
-app.config['MYSQL_PASSWORD'] = 'abu2004'  # parolingizni yozing
-app.config['MYSQL_DB'] = 'magenta'              # yaratgan database nomi
+app.config['MYSQL_PASSWORD'] = 'vabsJhHaihNZSAFalrTMhxLBHgjUBAys'  # parolingizni yozing
+app.config['MYSQL_DB'] = 'railway'              # yaratgan database nomi
 
 mysql = MySQL(app)
 
