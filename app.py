@@ -1,16 +1,17 @@
 from flask import Flask, render_template, request, jsonify
-from flask_mysqldb import MySQL
+import pymysql
 
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
-app.config['MYSQL_HOST'] = 'localhost'  # o'zingizning mysql serveringiz
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'           # o'zingiz tanlagan username
-app.config['MYSQL_PASSWORD'] = 'abu2004'  # parolingizni yozing
-app.config['MYSQL_DB'] = 'magenta'              # yaratgan database nomi
-
-mysql = MySQL(app)
+# MySQL konfiguratsiyasi
+mysql = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='abu2004',
+    database='magenta',
+    cursorclass=pymysql.cursors.DictCursor
+)
 
 @app.route('/')
 def index():
