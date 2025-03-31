@@ -4,15 +4,16 @@ import pymysql
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
-# MySQL konfiguratsiyasi
-mysql = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='abu2004',
-    database='magenta',
-    cursorclass=pymysql.cursors.DictCursor
-)
-
+def connect_db():
+    return pymysql.connect(
+        host='localhost',  # yoki Railway MySQL host nomini qo'yasiz
+        user='root',
+        password='abu2004',
+        database='magenta',
+        cursorclass=pymysql.cursors.DictCursor
+    )
+    
+    
 @app.route('/')
 def index():
     try:
