@@ -5,11 +5,11 @@ app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
 db = mysql.connector.connect(
-    host="shuttle.proxy.rlwy.net",
+    host="interchange.proxy.rlwy.net",
     user="root",
-    password="vkOhLYDMGhSmgTFqhdPyOkxxFyfwAgcZ",
+    password="iGWGebkLUeHXdLfuSoDPLIidXVLBMAFl",
     database="railway",
-    port=31926  # bu juda muhim!
+    port=15313  # bu juda muhim!
 )
 
 cursor = db.cursor()
@@ -20,7 +20,7 @@ def index():
     try:
         cur = cur = db.cursor()
 
-        cur.execute("SELECT id, name, features, website, location, duration, tuition, rating, image, course_types FROM datamy ORDER BY id DESC")
+        cur.execute("SELECT id, name, features, website, location, duration, tuition, rating, image, course_types FROM data ORDER BY id DESC")
         data = cur.fetchall()
         cur.close()
     except Exception as e:
@@ -42,7 +42,7 @@ def search():
 
     query = """
         SELECT id, name, features, website, location, duration, tuition, rating, image, course_types
-        FROM datamy 
+        FROM data 
         WHERE LOWER(name) LIKE LOWER(%s) OR LOWER(location) LIKE LOWER(%s)
         ORDER BY rating DESC
     """
@@ -78,7 +78,7 @@ def get_data():
     try:
         cur = cur = db.cursor()
 
-        cur.execute("SELECT * FROM datamy ORDER BY id DESC LIMIT %s OFFSET %s", [limit, offset])
+        cur.execute("SELECT * FROM data ORDER BY id DESC LIMIT %s OFFSET %s", [limit, offset])
         results = cur.fetchall()
 
         cur.execute("SELECT COUNT(*) FROM data")
@@ -109,11 +109,11 @@ def filter_schools():
 
     # Base SQL Query
     query = """SELECT id, name, features, website, location, duration, tuition, rating, image, course_types 
-                FROM datamy WHERE 1=1"""
+                FROM data WHERE 1=1"""
     params = []
 
     # Count Query for Pagination
-    query_count = "SELECT COUNT(*) FROM datamy WHERE 1=1"
+    query_count = "SELECT COUNT(*) FROM data WHERE 1=1"
     params_count = []
 
     # 🔹 Filter by Region
