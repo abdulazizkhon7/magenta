@@ -18,7 +18,8 @@ cursor = db.cursor()
 @app.route('/')
 def index():
     try:
-        cur = mysql.connection.cursor()
+        cur = cur = db.cursor()
+
         cur.execute("SELECT id, name, features, website, location, duration, tuition, rating, image, course_types FROM data ORDER BY id DESC")
         data = cur.fetchall()
         cur.close()
@@ -48,7 +49,8 @@ def search():
     params = [f'%{search_query}%', f'%{search_query}%']
 
     try:
-        cur = mysql.connection.cursor()
+        cur = cur = db.cursor()
+
         cur.execute(query, params)
         data = cur.fetchall()
         cur.close()
@@ -74,7 +76,8 @@ def get_data():
     offset = (page - 1) * limit
 
     try:
-        cur = mysql.connection.cursor()
+        cur = cur = db.cursor()
+
         cur.execute("SELECT * FROM data ORDER BY id DESC LIMIT %s OFFSET %s", [limit, offset])
         results = cur.fetchall()
 
@@ -136,7 +139,8 @@ def filter_schools():
         params_count.extend(course_types)
 
     # 🔹 Get Total Count for Pagination
-    cur = mysql.connection.cursor()
+    cur = cur = db.cursor()
+
     cur.execute(query_count, params_count)
     total_items = cur.fetchone()[0]
     cur.close()
@@ -149,7 +153,8 @@ def filter_schools():
     params.extend([page_size, offset])
 
     # 🔹 Fetch Data
-    cur = mysql.connection.cursor()
+    cur = cur = db.cursor()
+
     cur.execute(query, params)
     data = cur.fetchall()
     cur.close()
